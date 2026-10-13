@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block title %}Crop Plans{% endblock %}{% block content %}
+<div class="page-title"><div><p class="eyebrow">SEASON MANAGEMENT</p><h1>Crop planning</h1><p>Plan sowing and harvest dates for each field.</p></div></div>
+<section class="panel"><h2 class="panel-title">Add a crop plan</h2><form method="post" class="form-grid">
+<label>Field<select name="field_id" required>{% for f in fields %}<option value="{{ f.id }}">{{ f.name }} · {{ f.area }} acres</option>{% endfor %}</select></label>
+<label>Crop<select name="crop_id" required>{% for c in crops %}<option value="{{ c.id }}">{{ c.name }} ({{ c.duration_days }} days)</option>{% endfor %}</select></label>
+<label>Season<select name="season_id" required>{% for s in seasons %}<option value="{{ s.id }}">{{ s.name }}</option>{% endfor %}</select></label>
+<label>Sowing date<input type="date" name="sow_date" required></label><label>Expected harvest<input type="date" name="harvest_date" required></label>
+<label>Status<select name="status"><option>Planned</option><option>Sown</option><option>Harvested</option></select></label><div class="form-action"><button class="btn">Save crop plan</button></div>
+</form></section>
+<section class="panel"><div class="panel-head"><h2>Crop plan records</h2><span class="pill">{{ rows|length }} records</span></div><div class="table-wrap"><table><thead><tr><th>ID</th><th>Field</th><th>Crop</th><th>Season</th><th>Sowing</th><th>Harvest</th><th>Status</th><th></th></tr></thead><tbody>
+{% for r in rows %}<tr><td>#{{ r.id }}</td><td>{{ r.field_name }}</td><td>{{ r.crop_name }}</td><td>{{ r.season_name }}</td><td>{{ r.sow_date }}</td><td>{{ r.harvest_date }}</td><td><span class="status {{ r.status|lower }}">{{ r.status }}</span></td><td><form method="post" action="{{ url_for('delete_record',table='plans',row_id=r.id) }}" onsubmit="return confirm('Delete this plan?')"><button class="link danger">Delete</button></form></td></tr>{% else %}<tr><td colspan="8" class="empty">No plans added yet.</td></tr>{% endfor %}</tbody></table></div></section>{% endblock %}

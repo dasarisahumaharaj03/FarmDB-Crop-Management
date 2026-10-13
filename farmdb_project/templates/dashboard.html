@@ -1,0 +1,24 @@
+{% extends "base.html" %}{% block title %}Dashboard{% endblock %}
+{% block content %}
+<section class="hero">
+  <div><p class="eyebrow">FARM MANAGEMENT WORKSPACE</p><h1>Grow smarter with <span>FarmDB.</span></h1>
+  <p>Plan crop cycles, keep farm records organised, and make better use of your land and inputs.</p>
+  <div class="actions"><a class="btn" href="{{ url_for('plans') }}">＋ Create crop plan</a><a class="btn secondary" href="{{ url_for('reports') }}">View reports ↗</a></div></div>
+  <div class="hero-art" aria-label="Farm landscape illustration"><div class="sun"></div><div class="hill h1"></div><div class="hill h2"></div><div class="crop">🌱　🌾　🌱</div></div>
+</section>
+<div class="section-heading"><div><p class="eyebrow">AT A GLANCE</p><h2>Your farm overview</h2></div><span class="pill">● Local database connected</span></div>
+<div class="stats">
+  <article class="stat"><span class="stat-icon">🏡</span><p>Farms</p><strong>{{ stats.farms }}</strong><small>Registered farm(s)</small></article>
+  <article class="stat"><span class="stat-icon">🌱</span><p>Fields</p><strong>{{ stats.fields }}</strong><small>{{ "%.1f"|format(stats.area) }} acres total area</small></article>
+  <article class="stat"><span class="stat-icon">🗓️</span><p>Crop plans</p><strong>{{ stats.plans }}</strong><small>Planned crop cycles</small></article>
+  <article class="stat"><span class="stat-icon">📦</span><p>Input types</p><strong>{{ stats.inputs }}</strong><small>Tracked stock items</small></article>
+</div>
+<div class="grid two">
+  <section class="panel"><div class="panel-head"><div><p class="eyebrow">RECENT ACTIVITY</p><h2>Latest crop plans</h2></div><a href="{{ url_for('plans') }}">Manage →</a></div>
+  {% if recent %}<div class="table-wrap"><table><thead><tr><th>Field</th><th>Crop</th><th>Dates</th><th>Status</th></tr></thead><tbody>{% for p in recent %}<tr><td>{{ p.field_name }}</td><td>{{ p.crop_name }}</td><td>{{ p.sow_date }}<small class="block">to {{ p.harvest_date }}</small></td><td><span class="status {{ p.status|lower }}">{{ p.status }}</span></td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty">No crop plans yet. Create your first plan to get started.</div>{% endif %}</section>
+  <section class="panel tips"><p class="eyebrow">QUICK ACTIONS</p><h2>Keep things moving</h2><a class="quick" href="{{ url_for('fields') }}"><span>🗺️</span><span><b>Manage your fields</b><small>Track area and soil type</small></span><span>→</span></a>
+  <a class="quick" href="{{ url_for('inputs') }}"><span>🧪</span><span><b>Check farm inputs</b><small>Review stock and unit cost</small></span><span>→</span></a>
+  <a class="quick" href="{{ url_for('soil') }}"><span>🌿</span><span><b>Add a soil test</b><small>Record pH and nutrients</small></span><span>→</span></a>
+  <a class="quick" href="{{ url_for('reports') }}"><span>📈</span><span><b>Explore reports</b><small>View yield and inventory</small></span><span>→</span></a></section>
+</div>
+{% endblock %}

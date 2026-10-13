@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+farmdb.sqlite3
+instance/
+.DS_Store

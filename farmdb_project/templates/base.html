@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}FarmDB{% endblock %} | Farm Management</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="{{ url_for('dashboard') }}"><span class="logo">🌾</span><span>FarmDB<small>Crop planning & farm inputs</small></span></a>
+  <nav>
+    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('plans') }}">Crop plans</a>
+    <a href="{{ url_for('fields') }}">Fields</a>
+    <a href="{{ url_for('inputs') }}">Farm inputs</a>
+    <a href="{{ url_for('soil') }}">Soil tests</a>
+    <a href="{{ url_for('reports') }}">Reports</a>
+  </nav>
+</header>
+<main class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}{% for category, message in messages %}<div class="alert {{ category }}">{{ message }}</div>{% endfor %}{% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+  <footer>FarmDB · DBMS Project · Built with Python, Flask and SQLite</footer>
+</main>
+</body></html>
